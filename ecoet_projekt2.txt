@@ -18,19 +18,20 @@ Wgnd = 15; # width of ground plane
 W=1.94247; # width of metal strio
 Tsub =1; # substrate thicness from calculator
 Tgnd = 2; # Ground plane thicness - jaki wymiar
-H = 2*(Tgnd+Tsub+T/2); # heigh of model
+H = 10; # heigh of model
+#Lstub_open = 52.6866;
 
 OPENOBJECT(oname);
 CALL( "planar/msps.udo", "substrate1", Length,Wgnd , Tsub, Substrate, Tgnd , H-Tgnd, A, x, y, z, 12 );
 CALL( "planarsp/mslsp.udo", mslsp,Length, W, T, metal, Y, 0, x, y+Wgnd/2, z+Tgnd+Tsub, 11 );
 CALL( "elements/specyu.udo", strip_mesh1, 0, 0.1, x, y+Wgnd/2-W/2, z, 7 );
 CALL( "elements/specyd.udo", strip_mesh2, 0, 0.1, x, y+Wgnd/2+W/2, z, 7 );
-#CALL( "elements/specxu.udo", strip_mesh3, W, 0.2, x+Length-dstub-W/2, y+Wgnd/2, z, 7 );
-#CALL( "elements/specxd.udo", strip_mesh, W, 0.2, x+Length-dstub+W/2, y+Wgnd/2, z, 7 );
+CALL( "elements/speczd.udo", strip_mesh3, 0, 0.1, x, y, z+Tsub+Tgnd, 7 );
+
 # parallel stub
-#CALL( "planarsp/mslsp.udo", mslsp,Lstub, W, T, metal, Y,90, x+Length - dstub, y+Wgnd/2+W/2, z+Tgnd+Tsub, 11 );
-#CALL( "lumped/lumped_Parallel.udo"," load", R, 0, C, Ez, 1, x+Len.,gth, y+Wgnd/2, z+Tsub+Tgnd+T/2, 10 );
-#CALL( "lumped/lumped_Series.udo", "Stub_load", 0.000001, 0, 0, Ez, 1, x, y, z, 10 );
+CALL( "planarsp/mslsp.udo", mslsp,Lstub, W, T, metal, Y,90, x+Length - dstub, y+Wgnd/2+W/2, z+Tgnd+Tsub, 11 );
+CALL( "lumped/lumped_Parallel.udo"," load", R, 0, C, Ez, 1, x+Length, y+Wgnd/2, z+Tsub+Tgnd+T/2, 10 );
+CALL( "lumped/lumped_Series.udo", "Stub_load", 0.000001, 0, 0, Ez, 1, x+Length-dstub, y+Lstub+Wgnd/2+W/2, z+Tsub+Tgnd, 10 );
 # Absorbing walls
 CALL( "boxes/bbox.udo", Length, Wgnd, H, n, n, A, A, n,n , x, y, z, 13 );
 
