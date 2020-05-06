@@ -25,7 +25,7 @@ CALL( "planarsp/mslsp.udo", mslsp,Length, W, T, metal, Y, 0, x, y+Wgnd/2, z+Tgnd
 # Meshing
 CALL( "elements/specyu.udo", strip_mesh1, 0, 0.1, x, y+Wgnd/2-3*W/2, z, 7 );
 CALL( "elements/specyd.udo", strip_mesh2, 0, 0.1, x, y+Wgnd/2+3*W/2, z, 7 );
-CALL( "elements/speczd.udo", strip_mesh3, 0, 0.1, x, y, z+Tsub+Tgnd, 7 );
+CALL( "elements/speczd.udo", strip_mesh3, 0, 0.1, x, y, z+Tsub+Tgnd+W/2, 7 );
 CALL( "elements/specxu.udo", strip_mesh4, Wgnd, 0.1, x+Length-dstub-3*W/2, y, z, 7 );
 CALL( "elements/specxd.udo", strip_mesh5, Wgnd, 0.1, x+Length-dstub+3*W/2, y, z, 7 );
 CALL( "elements/specyd.udo", strip_mesh6, W, 1, x+Length-dstub-W/2, y+Wgnd/2-W/2, z, 7 );
