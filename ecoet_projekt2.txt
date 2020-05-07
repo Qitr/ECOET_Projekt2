@@ -1,19 +1,22 @@
 comment="Matching Circuit"; 
 bitmap="nobitmap.bmp";
 
-PAR( "name", oname, "MatchCir" );
+PAR( "name", oname, "matchCir" );
+#PAR('Lstub',Lstub,6.2972);
+#PAR('dstub,dstub,4.72623');
 
 
 
 ENDHEADER;
 T = 0.035; # thickness 35 um
 T=0;
-dstub = 4.72623;
-Lstub =6.29272 ;
+dstub = 3.65;
+Lstub =5.8 ;
+Lstub = 4.35; # after correction
 Length = 20;
 R = 150;
 C = 9.2;
-Wgnd = 16; # width of ground plane
+Wgnd = 18; # width of ground plane
 W=1.94247; # width of metal strio
 Tsub =1; # substrate thicness from calculator
 Tgnd = 1; # Ground plane thicness - jaki wymiar
@@ -33,7 +36,7 @@ CALL( "elements/specyd.udo", strip_mesh6, W, 1, x+Length-dstub-W/2, y+Wgnd/2-W/2
 # parallel stub
 CALL( "planarsp/mslsp.udo", mslsp,Lstub, W, T, metal, Y,90, x+Length - dstub, y+Wgnd/2+W/2, z+Tgnd+Tsub, 11 );
 # load of line
-CALL( "lumped/lumped_Parallel.udo"," load", R, 0, C, Ez, 1, x+Length, y+Wgnd/2, z+Tsub+Tgnd+T/2, 10 );
+CALL( "lumped/lumped_Parallel.udo"," load", R, 0, C, Ez, 1, x+Length, y+Wgnd/2, z+Tsub/2+Tgnd, 10 );
 CALL( "wires/wire1.udo", wire_load, Z, Tsub, 0.05, x+Length, y+Wgnd/2, z+Tgnd, 8 );
 # load of stub
 CALL( "wires/wire1.udo", wire_stub, Z, Tsub, 0.05, x+Length-dstub, y+Lstub+Wgnd/2+W/2, z+Tgnd, 8 );
